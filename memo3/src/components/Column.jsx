@@ -23,6 +23,7 @@ class Column extends Component {
               <Card
                 key={card.id}
                 onDeleteCard={this.props.onDeleteCard}
+                onEditCard={this.props.onEditCard}
                 card={card}
                 column={this.props.column}
               />

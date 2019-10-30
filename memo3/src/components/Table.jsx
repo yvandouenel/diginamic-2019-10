@@ -5,6 +5,7 @@ import { GiBrainTentacle } from "react-icons/gi";
 
 class Table extends Component {
   state = {
+    card_to_edit: {},
     terms: [
       { id: 1, name: "JS", selected: false },
       { id: 2, name: "HTML", selected: true },
@@ -82,6 +83,54 @@ class Table extends Component {
 
     this.setState(state_local);
   };
+  editCard = (e, card_to_edit, card_column) => {
+    console.log("Dans editCard : Nous souffrons tous !");
+    console.log("Carte à modifier : ", card_to_edit);
+
+    const state_local = { ...this.state };
+    // récupération de l'index de la colonne qui contient
+    // la carte à supprimer
+    const index_column = state_local.columns.indexOf(card_column);
+
+    //index de la carte à modifier
+    const index_card = state_local.columns[index_column].cards.indexOf(
+      card_to_edit
+    );
+
+    // changement de la propriété form_status pour afficher
+    // le formulaire
+    state_local.card_to_edit = {
+      column_index: index_column,
+      card_index: index_card
+    };
+
+    this.setState(state_local);
+  };
+  showForm = () => {
+    if (Object.keys(this.state.card_to_edit).length !== 0) {
+      return (
+        <form>
+          <label>
+            Question :
+            <input
+              type="text"
+              name="question"
+              value={
+                this.state.columns[this.state.card_to_edit.column_index].cards[
+                  this.state.card_to_edit.card_index
+                ].question
+              }
+            />
+          </label>
+          <label>
+            Reponse :
+            <input type="text" name="response" />
+          </label>
+          <input type="submit" value="Envoyer" />
+        </form>
+      );
+    }
+  };
   render() {
     return (
       <section>
@@ -100,6 +149,7 @@ class Table extends Component {
         </header>
 
         <main className="container-fluid mt-4">
+          {this.showForm()}
           <section className="row h-100">
             {this.state.columns.map(c => {
               // Création d'une instance de colonne
@@ -115,6 +165,7 @@ class Table extends Component {
                   key={c.id}
                   column={c}
                   onClickAddCard={this.addCard}
+                  onEditCard={this.editCard}
                 />
               );
             })}

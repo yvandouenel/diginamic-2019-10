@@ -17,6 +17,14 @@ class Card extends Component {
         >
           Supprimer
         </button>
+        <button
+          onClick={e => {
+            this.props.onEditCard(e, this.props.card, this.props.column);
+          }}
+          className="btn btn-primary"
+        >
+          Modifier
+        </button>
       </article>
     );
   }
