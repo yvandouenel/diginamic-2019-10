@@ -1,22 +1,11 @@
-window.onload = function() {
-  const form = document.getElementById("form");
-  class Person {
-    constructor(n) {
-      this.name = n;
-    }
-    manageSubmit = function() {
-      // Si une arrow function est utilisée dans une classe
-      // alors this est l'instance de la classe en question
-      // if you use an arrow function in a class
-      // then "this" is the "instance" of the class (here Person)
-      form.onsubmit = e => {
-        e.preventDefault();
-        console.log("Après la soumission du formulaire");
-        console.log(this);
-      };
-    };
+import Person from "./Person.js";
+
+class Student extends Person {
+  constructor(n,f,grade) {
+    super(n,f);
+    this.grade = grade;
   }
-  const p = new Person("Dylan");
-  p.manageSubmit();
-};
-/* */
+}
+
+let s = new Student("Shelby","Tommy","army");
+s.presentMySelf();
