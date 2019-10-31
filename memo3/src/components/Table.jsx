@@ -69,19 +69,24 @@ class Table extends Component {
     console.log("Carte à effacer : ", card_to_delete);
 
     const state_local = { ...this.state };
+    if (Object.keys(this.state.card_to_edit).length === 0) {
+      // récupération de l'index de la colonne qui contient
+      // la carte à supprimer
+      const index_column = state_local.columns.indexOf(card_column);
 
-    // récupération de l'index de la colonne qui contient
-    // la carte à supprimer
-    const index_column = state_local.columns.indexOf(card_column);
+      //index de la carte à supprimer
+      const index_card = state_local.columns[index_column].cards.indexOf(
+        card_to_delete
+      );
+      // Suppression de la carte dans le state local
+      state_local.columns[index_column].cards.splice(index_card, 1);
 
-    //index de la carte à supprimer
-    const index_card = state_local.columns[index_column].cards.indexOf(
-      card_to_delete
-    );
-    // Suppression de la carte dans le state local
-    state_local.columns[index_column].cards.splice(index_card, 1);
-
-    this.setState(state_local);
+      this.setState(state_local);
+    } else {
+      alert(
+        "Vous ne pouvez pas supprimer une carte qui est en cours de modification"
+      );
+    }
   };
   editCard = (e, card_to_edit, card_column) => {
     console.log("Dans editCard : Nous souffrons tous !");
@@ -97,7 +102,7 @@ class Table extends Component {
       card_to_edit
     );
 
-    // changement de la propriété form_status pour afficher
+    // changement de la propriété card_to_edit pour afficher
     // le formulaire
     state_local.card_to_edit = {
       column_index: index_column,
@@ -106,13 +111,54 @@ class Table extends Component {
 
     this.setState(state_local);
   };
+  handleSubmit = e => {
+    console.log("Dans handleSubmit");
+    e.preventDefault();
+
+    const state_local = { ...this.state };
+    // modification de card_to_edit du state local
+    // car l'affichage du formulaire conditionné à sa valeur
+    state_local.card_to_edit = {};
+    this.setState(state_local);
+  };
+  handleChangeQuestion = e => {
+    console.log("Dans handleChangeQuestion");
+    console.log(e.target.value);
+    // copie du state
+    const state_local = { ...this.state };
+    // Modification du state local (state_local.card_to_edit {column_index card_index}
+    state_local.columns[state_local.card_to_edit.column_index].cards[
+      state_local.card_to_edit.card_index
+    ].question = e.target.value;
+
+    this.setState(state_local);
+  };
+  handleChangeResponse = e => {
+    console.log("Dans handleChangeResponse");
+    console.log(e.target.value);
+    const state_local = { ...this.state };
+    // Modification du state local (state_local.card_to_edit {column_index card_index}
+    state_local.columns[state_local.card_to_edit.column_index].cards[
+      state_local.card_to_edit.card_index
+    ].response = e.target.value;
+
+    this.setState(state_local);
+  };
   showForm = () => {
+    // Teste si this.state.card_to_edit est un objet vide
     if (Object.keys(this.state.card_to_edit).length !== 0) {
       return (
-        <form>
+        <form
+          onSubmit={e => {
+            this.handleSubmit(e);
+          }}
+        >
           <label>
             Question :
             <input
+              onChange={e => {
+                this.handleChangeQuestion(e);
+              }}
               type="text"
               name="question"
               value={
@@ -124,9 +170,20 @@ class Table extends Component {
           </label>
           <label>
             Reponse :
-            <input type="text" name="response" />
+            <input
+              onChange={e => {
+                this.handleChangeResponse(e);
+              }}
+              type="text"
+              name="response"
+              value={
+                this.state.columns[this.state.card_to_edit.column_index].cards[
+                  this.state.card_to_edit.card_index
+                ].response
+              }
+            />
           </label>
-          <input type="submit" value="Envoyer" />
+          <input type="submit" value="Fermer" />
         </form>
       );
     }
