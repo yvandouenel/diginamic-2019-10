@@ -1,0 +1,58 @@
+header {
+  h1 {
+    font-size: 1.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    img {
+      max-height: 100px;
+      margin-right: 20px;
+    }
+  }
+  .row {
+    align-items: center;
+    #top-nav {
+      .user-icon {
+        font-size: 2rem;
+        color: $secondary;
+        &:hover {
+          color: $primary;
+          cursor: pointer;
+        }
+      }
+      display: flex;
+      > * {
+        margin: 0 20px;
+      }
+    }
+  }
+}
+// Zone de contenu principal
+main {
+  // Zone d'affichage des fichiers
+  form {
+    margin-left: 25px;
+  }
+  section#section-articles {
+    display: flex;
+    flex-wrap: wrap;
+
+    > article {
+      flex-basis: 0;
+      width: 250px;
+      min-width: 250px;
+      max-width: 250px;
+      margin: 20px;
+      .fa-file-pdf {
+        font-size: 2rem;
+        margin-right: 20px;
+        float: left;
+      }
+      h3 {
+        &::first-letter {
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.monsvg {
+  width: 50%;
+  fill: red;
+  stroke: white;
+  stroke-width: 10px;
+  stroke-dasharray: 300px;
+  transition: 500ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  transition-property: stroke-dashoffset, stroke-dasharray;
+}
+
+.path1 {
+  fill: green;
+}
+
+.monsvg:hover {
+  stroke-dashoffset: 200px;
+  stroke-dasharray: 600px;
+}
+
+.svg2 {
+  fill: red;
+  width: 5em;
+  stroke-width: 1px;
+  stroke: blue;
+}

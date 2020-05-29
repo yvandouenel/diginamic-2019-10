@@ -1,0 +1,13 @@
+Benjamin
+
+Va gérer :
+ - ses salaires,
+ - ses impôts,
+ - factures en tant que particulier (edf, tél, ...)
+ - contrat de travail
+ - 
+
+L'application est imposée par l'administration automatiquement créé 
+
+Pb : quid des infos confidentielles ? 
+Pas en adéquation avec le référentiel RGPD
